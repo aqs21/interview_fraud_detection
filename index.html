@@ -5,9 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fraud Detection</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        async function fetchAlert() {
+            try {
+                const response = await fetch('/alert_status');
+                const data = await response.json();
+                document.getElementById('alert-box').innerText = data.message;
+            } catch (err) {
+                console.error("Failed to fetch alert:", err);
+            }
+        }
+
+        setInterval(fetchAlert, 1000);
+    </script>
 </head>
 <body>
     <h1>Real-Time Interview Fraud Detection</h1>
+    <div id="alert-box" class="alert"></div>
     <div class="container">
         <img src="{{ url_for('video_feed') }}" width="640" height="480" id="webcam">
     </div>
